@@ -7,7 +7,7 @@ import { Prices } from '../imports/api/prices'
 SyncedCron.add({
   name: 'Get the date!',
   schedule(parser) {
-    return parser.text('at 2:30 PM every day')
+    return parser.text('every 1 hours')
   },
   job() {
 	scraperjs.StaticScraper.create('https://richdadeducation.com/3DayTraining/RealEstate/Register/')

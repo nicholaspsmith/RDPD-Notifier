@@ -17,7 +17,8 @@ Meteor.methods({
 			console.log('oldPrice ', oldPrice)
 			console.log('price ', price)
 			Prices.insert({ price, date: new Date() })
-			const message = `The price of the Rich Dad Poor Dad 3 Day Seminar has changed. It is now $${price}`
+			let message = `The price of the Rich Dad Poor Dad 3 Day Seminar has changed. It is now $${price}`
+			message += '\nhttps://richdadeducation.com/3DayTraining/RealEstate/Register'
 			sendMessage(message, nick)
 		} else {
 			console.log('Prices are the same ' + new Date())

@@ -9,5 +9,9 @@
     "meteor-node-stubs": "~0.2.4",
     "scraperjs": "^1.2.0",
     "twilio": "^2.11.1"
+  },
+  "engines": {
+    "node": "4.4.7",
+    "npm": "3.10.5"
   }
 }

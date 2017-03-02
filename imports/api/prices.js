@@ -8,20 +8,23 @@ const nick = '+19158619472'
 export const Prices = new Mongo.Collection('prices')
 
 Meteor.methods({
-	'newPrice'(priceFromScraper) {
-		const existingPrices = Prices.find({}, {sort: {date: -1} }).fetch()
-		let oldPrice = existingPrices[0].price
+	'newPrice'(priceFromScraper, name, message) {
 		let price = parseInt(priceFromScraper.replace('$', ''))
-
-		if (price != oldPrice) {
-			console.log('oldPrice ', oldPrice)
-			console.log('price ', price)
-			Prices.insert({ price, date: new Date() })
-			let message = `The price of the Rich Dad Poor Dad 3 Day Seminar has changed. It is now $${price}`
-			message += '\nhttps://richdadeducation.com/3DayTraining/RealEstate/Register'
-			sendMessage(message, nick)
+		const existingPrices = Prices.find({ name }, {sort: {date: -1} }).fetch()
+		if (existingPrices.length === 0) {
+			Prices.insert({ name, price, date: new Date() })
+			sendMessage(`Added ${name} to price tracker`)
 		} else {
-			console.log('Prices are the same ' + new Date())
+			let oldPrice = existingPrices[0].price
+
+			if (price != oldPrice) {
+				// console.log('oldPrice ', oldPrice)
+				// console.log('price ', price)
+				Prices.insert({ name, price, date: new Date() })
+				sendMessage(message, nick)
+			} else {
+				// console.log('Prices are the same ' + new Date())
+			}
 		}
 	}
 })

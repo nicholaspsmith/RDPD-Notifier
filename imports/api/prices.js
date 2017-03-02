@@ -9,7 +9,7 @@ export const Prices = new Mongo.Collection('prices')
 
 Meteor.methods({
 	'newPrice'(priceFromScraper, name, message) {
-		let price = parseInt(priceFromScraper.replace('$', ''))
+		let price = parseInt(priceFromScraper.replace('$', '').replace(',',''))
 		const existingPrices = Prices.find({ name }, {sort: {date: -1} }).fetch()
 		if (existingPrices.length === 0) {
 			Prices.insert({ name, price, date: new Date() })
@@ -18,12 +18,11 @@ Meteor.methods({
 			let oldPrice = existingPrices[0].price
 
 			if (price != oldPrice) {
-				// console.log('oldPrice ', oldPrice)
-				// console.log('price ', price)
 				Prices.insert({ name, price, date: new Date() })
+				console.log(message)
 				sendMessage(message, nick)
 			} else {
-				// console.log('Prices are the same ' + new Date())
+				console.log('Price is same ' + new Date())
 			}
 		}
 	}
